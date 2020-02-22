@@ -15,7 +15,7 @@
     <version>2.2.3-SNAPSHOT</version>
     <packaging>hpi</packaging>
 
-    <name>Active Choices Plug-in</name>
+    <name>Active Choices Parameter Plugin</name>
     <description>This plug-in provides additional parameter types for jobs, that allow you to cascade changes and render images or other HTML elements instead of the traditional parameter.</description>
 
     <url>https://github.com/jenkinsci/active-choices-plugin</url>
