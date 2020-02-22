@@ -145,7 +145,7 @@ public class ChoiceParameter extends AbstractScriptableParameter {
 
         @Override
         public String getDisplayName() {
-            return "Active Choices Parameter";
+            return "Active Choices Common Parameter";
         }
 
     }
