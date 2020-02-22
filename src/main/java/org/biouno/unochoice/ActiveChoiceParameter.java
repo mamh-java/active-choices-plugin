@@ -36,7 +36,7 @@ import org.kohsuke.stapler.DataBoundConstructor;
  * @author Bruno P. Kinoshita
  * @since 0.1
  */
-public class ChoiceParameter extends AbstractScriptableParameter {
+public class ActiveChoiceParameter extends AbstractScriptableParameter {
 
     /*
      * Serial UID.
@@ -69,7 +69,7 @@ public class ChoiceParameter extends AbstractScriptableParameter {
      * @param filterable filter flag
      * @deprecated see JENKINS-32149
      */
-    public ChoiceParameter(String name, String description, Script script, String choiceType, Boolean filterable) {
+    public ActiveChoiceParameter(String name, String description, Script script, String choiceType, Boolean filterable) {
         super(name, description, script);
         this.choiceType = StringUtils.defaultIfBlank(choiceType, PARAMETER_TYPE_SINGLE_SELECT);
         this.filterable = filterable;
@@ -86,8 +86,8 @@ public class ChoiceParameter extends AbstractScriptableParameter {
      * @param filterable filter flag
      * @deprecated see JENKINS-31625
      */
-    public ChoiceParameter(String name, String description, String randomName, Script script, String choiceType,
-                           Boolean filterable) {
+    public ActiveChoiceParameter(String name, String description, String randomName, Script script, String choiceType,
+                                 Boolean filterable) {
         super(name, description, randomName, script);
         this.choiceType = StringUtils.defaultIfBlank(choiceType, PARAMETER_TYPE_SINGLE_SELECT);
         this.filterable = filterable;
@@ -105,8 +105,8 @@ public class ChoiceParameter extends AbstractScriptableParameter {
      * @param filterLength length when filter start filtering
      */
     @DataBoundConstructor
-    public ChoiceParameter(String name, String description, String randomName, Script script, String choiceType,
-                           Boolean filterable, Integer filterLength) {
+    public ActiveChoiceParameter(String name, String description, String randomName, Script script, String choiceType,
+                                 Boolean filterable, Integer filterLength) {
         super(name, description, randomName, script);
         this.choiceType = StringUtils.defaultIfBlank(choiceType, PARAMETER_TYPE_SINGLE_SELECT);
         this.filterable = filterable;
