@@ -24,30 +24,6 @@
 
 package org.biouno.unochoice.util;
 
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
-import org.biouno.unochoice.AbstractUnoChoiceParameter;
-import org.jenkinsci.plugins.scriptler.config.Script;
-import org.jenkinsci.plugins.scriptler.config.ScriptlerConfiguration;
-
 import hudson.model.Item;
 import hudson.model.Items;
 import hudson.model.ParameterDefinition;
@@ -62,6 +38,28 @@ import hudson.util.DescribableList;
 import hudson.util.ReflectionUtils;
 import jenkins.model.Jenkins;
 import org.acegisecurity.Authentication;
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
+import org.biouno.unochoice.ActiveChoiceParameterDefinition;
+import org.jenkinsci.plugins.scriptler.config.Script;
+import org.jenkinsci.plugins.scriptler.config.ScriptlerConfiguration;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Utility methods.
@@ -228,8 +226,8 @@ public class Utils {
             parameterDefinitions.addAll(params);
         }
         for (ParameterDefinition pd : parameterDefinitions) {
-            if (pd instanceof AbstractUnoChoiceParameter) {
-                AbstractUnoChoiceParameter parameterDefinition = (AbstractUnoChoiceParameter) pd;
+            if (pd instanceof ActiveChoiceParameterDefinition) {
+                ActiveChoiceParameterDefinition parameterDefinition = (ActiveChoiceParameterDefinition) pd;
                 String uuid = parameterDefinition.getRandomName();
                 if (ObjectUtils.equals(parameterUUID, uuid)) {
                     return true;
