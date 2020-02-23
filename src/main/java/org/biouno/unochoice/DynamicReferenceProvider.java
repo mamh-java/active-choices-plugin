@@ -23,19 +23,17 @@ public class DynamicReferenceProvider extends ChoiceListProvider {
     private static final long serialVersionUID = 8261526672604361397L;
 
 
-    private final String choiceType;
+    private String choiceType;
 
-    private final Boolean omitValueField;
+    private Boolean omitValueField;
 
-    private final Script script;
+    private Script script;
     private String referencedParameters;
 
     @DataBoundConstructor
-    public DynamicReferenceProvider(Script script,
-                                    String choiceType, String referencedParameters,
-                                    Boolean omitValueField) {
-        this.script=script;
-        this.referencedParameters=referencedParameters;
+    public DynamicReferenceProvider(Script script, String choiceType, String referencedParameters, Boolean omitValueField) {
+        this.script = script;
+        this.referencedParameters = referencedParameters;
         this.choiceType = choiceType;
         this.omitValueField = BooleanUtils.toBooleanDefaultIfNull(omitValueField, Boolean.FALSE);
     }
@@ -77,7 +75,6 @@ public class DynamicReferenceProvider extends ChoiceListProvider {
         public String getDisplayName() {
             return "Active Choices Reference Parameter";
         }
-
 
 
     }

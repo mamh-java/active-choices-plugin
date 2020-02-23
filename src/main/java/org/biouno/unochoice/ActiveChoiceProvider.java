@@ -12,14 +12,14 @@ public class ActiveChoiceProvider extends ChoiceListProvider {
     private static final long serialVersionUID = -4449319038169585222L;
 
 
-    private final String choiceType;
+    private String choiceType;
 
 
-    private final Boolean filterable;
+    private Boolean filterable;
 
-    private final Integer filterLength;
+    private Integer filterLength;
 
-    private final Script script;
+    private Script script;
 
 
     @DataBoundConstructor
@@ -53,7 +53,6 @@ public class ActiveChoiceProvider extends ChoiceListProvider {
     public List<String> getChoiceList() {
         return null;
     }
-
 
 
     @Extension
