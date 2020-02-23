@@ -1,0 +1,20 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+         xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form"
+         xmlns:i="jelly:fmt" xmlns:p="/lib/hudson/project">
+
+
+    <j:set var="type" value="${it.type}"/>
+
+    <j:if test="${type eq 'PT_CASCADE'}">
+        <st:include page="cascadeContent.jelly"/>
+    </j:if>
+    <j:if test="${type eq 'PT_ACTIVE'}">
+        <st:include page="activeContent.jelly"/>
+    </j:if>
+    <j:if test="${type eq 'PT_REFERENCE'}">
+        <st:include page="referenceContent.jelly"/>
+    </j:if>
+
+
+</j:jelly>
