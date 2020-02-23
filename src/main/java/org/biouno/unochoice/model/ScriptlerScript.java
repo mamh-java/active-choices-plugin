@@ -187,7 +187,7 @@ public class ScriptlerScript extends AbstractScript {
         }
 
         private ManagementLink getScriptler() {
-            return Jenkins.getInstance().getExtensionList(ScriptlerManagement.class).get(0);
+            return Jenkins.get().getExtensionList(ScriptlerManagement.class).get(0);
         }
 
         /**

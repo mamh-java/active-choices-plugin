@@ -121,17 +121,17 @@ public class GroovyScript extends AbstractScript {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.biouno.unochoice.model.Script#eval()
      */
     @Override
     public Object eval() {
-        return eval(Collections.<String, String> emptyMap());
+        return eval(Collections.<String, String>emptyMap());
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.biouno.unochoice.model.Script#eval(java.util.Map)
      */
     @Override
@@ -139,16 +139,15 @@ public class GroovyScript extends AbstractScript {
         if (secureScript == null) {
             return null;
         }
-        final Jenkins instance = Jenkins.getInstance();
+        final Jenkins instance = Jenkins.get();
         ClassLoader cl = null;
-        if (instance != null) {
-            try {
-                PluginManager pluginManager = instance.getPluginManager();
-                cl = pluginManager.uberClassLoader;
-            } catch (Exception e) {
-                LOGGER.log(Level.FINEST, e.getMessage(), e);
-            }
+        try {
+            PluginManager pluginManager = instance.getPluginManager();
+            cl = pluginManager.uberClassLoader;
+        } catch (Exception e) {
+            LOGGER.log(Level.FINEST, e.getMessage(), e);
         }
+
         if (cl == null) {
             cl = Thread.currentThread().getContextClassLoader();
         }
@@ -199,7 +198,7 @@ public class GroovyScript extends AbstractScript {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
@@ -211,7 +210,7 @@ public class GroovyScript extends AbstractScript {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -225,7 +224,7 @@ public class GroovyScript extends AbstractScript {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
