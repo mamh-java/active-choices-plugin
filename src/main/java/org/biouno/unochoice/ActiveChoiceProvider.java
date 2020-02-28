@@ -49,12 +49,6 @@ public class ActiveChoiceProvider extends ChoiceListProvider {
         return script;
     }
 
-    @Override
-    public List<String> getChoiceList() {
-        return null;
-    }
-
-
     @Extension
     public static final class DescriptImpl extends ChoiceListProviderDescriptor {
 

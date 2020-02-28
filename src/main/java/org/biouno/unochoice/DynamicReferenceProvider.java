@@ -58,13 +58,7 @@ public class DynamicReferenceProvider extends ChoiceListProvider {
 
     @JavaScriptMethod
     public String getChoicesAsStringForUI() {
-
         return "";
-    }
-
-    @Override
-    public List<String> getChoiceList() {
-        return null;
     }
 
     @Extension

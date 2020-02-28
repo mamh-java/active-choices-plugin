@@ -49,12 +49,6 @@ public class CascadeChoiceProvider extends ChoiceListProvider {
         return filterLength == null ? (Integer) 1 : filterLength;
     }
 
-    @Override
-    public List<String> getChoiceList() {
-        return null;
-    }
-
-
     public String getReferencedParameters() {
         return referencedParameters;
     }
