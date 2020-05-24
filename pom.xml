@@ -17,8 +17,7 @@
 
     <name>Active Choices Parameter Plugin</name>
     <description>This plug-in provides additional parameter types for jobs, that allow you to cascade changes and render images or other HTML elements instead of the traditional parameter.</description>
-
-    <url>https://github.com/jenkinsci/active-choices-plugin</url>
+    <url>https://github.com/mamh-java/active-choices-plugin.git</url>
     
     <licenses>
         <license>
@@ -41,9 +40,9 @@
     </properties>
 
     <scm>
-        <connection>scm:git:git://github.com/jenkinsci/active-choices-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:jenkinsci/active-choices-plugin.git</developerConnection>
-        <url>http://github.com/jenkinsci/active-choices-plugin</url>
+        <connection>scm:git:git://github.com/mamh-java/active-choices-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:mamh-java/active-choices-plugin.git</developerConnection>
+        <url>http://github.com/mamh-java/active-choices-plugin</url>
         <tag>HEAD</tag>
     </scm>
 
