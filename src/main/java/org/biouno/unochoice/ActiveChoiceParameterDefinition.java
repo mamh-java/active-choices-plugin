@@ -207,7 +207,7 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
          */
         @Override
         public String getDisplayName() {
-            return "ActiveChoiceParameterDefinition";
+            return "Active Choice Parameter";
         }
 
 
