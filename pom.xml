@@ -18,7 +18,7 @@
     <name>Active Choices Plug-in</name>
     <description>This plug-in provides additional parameter types for jobs, that allow you to cascade changes and render images or other HTML elements instead of the traditional parameter.</description>
 
-    <url>https://github.com/jenkinsci/active-choices-plugin</url>
+    <url>https://github.com/mamh-java/active-choices-plugin</url>
     
     <licenses>
         <license>
@@ -36,14 +36,15 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <phantomjs.executable>phantomjs</phantomjs.executable>
-        <jenkins.version>2.204.1</jenkins.version>
+        <jenkins.version>2.249.3</jenkins.version>
+        <slf4jVersion>1.7.26</slf4jVersion>
         <java.level>8</java.level>
     </properties>
 
     <scm>
-        <connection>scm:git:git://github.com/jenkinsci/active-choices-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:jenkinsci/active-choices-plugin.git</developerConnection>
-        <url>http://github.com/jenkinsci/active-choices-plugin</url>
+        <connection>scm:git:https://github.com/mamh-java/active-choices-plugin.git</connection>
+        <developerConnection>scm:git:https://github.com/mamh-java/active-choices-plugin.git</developerConnection>
+        <url>https://github.com/mamh-java/active-choices-plugin</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -56,6 +57,10 @@
         <developer>
             <id>imoutsatsos</id>
             <name>Ioannis K. Moutsatsos</name>
+        </developer>
+        <developer>
+            <id>bright.ma</id>
+            <name>bright ma</name>
         </developer>
     </developers>
 
