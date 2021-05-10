@@ -120,7 +120,7 @@ public class CascadeChoiceProvider extends ChoiceListProvider {
 
         @Override
         public String getDisplayName() {
-            return "Active Choices Reactive Parameter";
+            return "Reactive Choices Parameter";
         }
 
     }
