@@ -57,6 +57,10 @@
             <id>imoutsatsos</id>
             <name>Ioannis K. Moutsatsos</name>
         </developer>
+        <developer>
+            <id>bright.ma</id>
+            <name>bright ma</name>
+        </developer>
     </developers>
 
     <dependencyManagement>
