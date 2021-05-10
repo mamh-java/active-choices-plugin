@@ -67,7 +67,7 @@ public class ReferenceChoiceProvider extends ChoiceListProvider {
 
         @Override
         public String getDisplayName() {
-            return "Active Choices Reference Parameter";
+            return "Reference Choices Parameter";
         }
 
 

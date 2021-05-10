@@ -54,7 +54,7 @@ public class ActiveChoiceProvider extends ChoiceListProvider {
 
         @Override
         public String getDisplayName() {
-            return "Active Choices Common Parameter";
+            return "Active Choices Parameter";
         }
 
     }
