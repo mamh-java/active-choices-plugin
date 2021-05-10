@@ -54,7 +54,7 @@ public class ActiveChoiceProvider extends ChoiceListProvider {
 
         @Override
         public String getDisplayName() {
-            return "Active Choices Parameter";
+            return Messages.ActiveChoiceProvider_DisplayName();
         }
 
     }

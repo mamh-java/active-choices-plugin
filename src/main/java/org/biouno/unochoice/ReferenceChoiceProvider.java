@@ -67,7 +67,7 @@ public class ReferenceChoiceProvider extends ChoiceListProvider {
 
         @Override
         public String getDisplayName() {
-            return "Reference Choices Parameter";
+            return Messages.ReferenceChoiceProvider_DisplayName();
         }
 
 
