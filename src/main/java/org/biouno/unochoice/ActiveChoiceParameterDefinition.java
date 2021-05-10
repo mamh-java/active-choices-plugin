@@ -287,7 +287,7 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
          */
         @Override
         public String getDisplayName() {
-            return "Active Choice Parameter";
+            return Messages.ActiveChoiceParameterDefinition_DisplayName();
         }
 
 
