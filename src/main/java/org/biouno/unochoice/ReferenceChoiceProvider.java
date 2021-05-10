@@ -17,7 +17,7 @@ import org.kohsuke.stapler.bind.JavaScriptMethod;
 import java.util.List;
 
 
-public class DynamicReferenceProvider extends ChoiceListProvider {
+public class ReferenceChoiceProvider extends ChoiceListProvider {
 
 
     private static final long serialVersionUID = 8261526672604361397L;
@@ -31,7 +31,7 @@ public class DynamicReferenceProvider extends ChoiceListProvider {
     private String referencedParameters;
 
     @DataBoundConstructor
-    public DynamicReferenceProvider(Script script, String choiceType, String referencedParameters, Boolean omitValueField) {
+    public ReferenceChoiceProvider(Script script, String choiceType, String referencedParameters, Boolean omitValueField) {
         this.script = script;
         this.referencedParameters = referencedParameters;
         this.choiceType = choiceType;
