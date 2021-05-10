@@ -36,6 +36,7 @@ import hudson.markup.RawHtmlMarkupFormatter;
 import org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript;
 import org.jenkinsci.plugins.scriptsecurity.scripts.ApprovalContext;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.jenkinsci.Symbol;
 
 import groovy.lang.Binding;
 import hudson.Extension;
@@ -251,6 +252,7 @@ public class GroovyScript extends AbstractScript {
     // --- descriptor
 
     @Extension
+    @Symbol({"groovyScript"})
     public static class DescriptorImpl extends ScriptDescriptor {
         /*
          * (non-Javadoc)
