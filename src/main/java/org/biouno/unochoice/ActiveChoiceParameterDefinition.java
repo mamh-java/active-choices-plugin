@@ -628,6 +628,11 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
         return Arrays.<Object>asList(mapResult.values(), mapResult.keySet());
     }
 
+    @JavaScriptMethod
+    public String getChoicesAsStringForUI() {
+        return ""; //TODO 需要修复，目前可以正常显示。不再是loading状态了。
+    }
+
     public String[] getReferencedParametersAsArray() {
         String referencedParameters = this.getReferencedParameters();
         if (StringUtils.isNotBlank(referencedParameters)) {
