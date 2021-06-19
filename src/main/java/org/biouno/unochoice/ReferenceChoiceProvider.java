@@ -56,11 +56,6 @@ public class ReferenceChoiceProvider extends ChoiceListProvider {
         return referencedParameters;
     }
 
-    @JavaScriptMethod
-    public String getChoicesAsStringForUI() {
-        return "";
-    }
-
     @Extension
     public static final class DescriptorImpl extends ChoiceListProviderDescriptor {
 
