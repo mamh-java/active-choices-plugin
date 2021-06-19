@@ -475,7 +475,8 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
 
     @JavaScriptMethod
     public String getChoicesAsStringForUI() {
-        return ""; //TODO 需要修复，目前可以正常显示。不再是loading状态了。
+        String result = getChoicesAsString(getParameters());
+        return result;
     }
 
     public String[] getReferencedParametersAsArray() {
