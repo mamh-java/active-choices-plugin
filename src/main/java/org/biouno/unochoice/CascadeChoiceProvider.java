@@ -9,20 +9,44 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import java.util.List;
 
 
+/**
+ * <p>A choice parameter, that gets updated when another parameter changes. The simplest
+ * use case for this, would be having a list of states, and when the user selected a
+ * state it would trigger an update of the city fields.</p>
+ *
+ * <p>The state parameter would be a choice parameter, and the city parameter would be a
+ * cascade choice parameter, that referenced the former.</p>
+ *
+ * <p>Its options are retrieved from the evaluation of a Groovy script.</p>
+ *
+ * @author Bruno P. Kinoshita
+ * @since 0.1
+ */
 public class CascadeChoiceProvider extends ChoiceListProvider {
 
-
+    /*
+     * Serial UID.
+     */
     private static final long serialVersionUID = 4524790278642708107L;
 
-
+    /**
+     * Choice type.
+     */
     private final String choiceType;
 
-
+    /**
+     * Filter flag.
+     */
     private final Boolean filterable;
 
+    /**
+     * Filter length. Defines a minimum number of characters that must be entered before the filter
+     * is activated.
+     */
     private final Integer filterLength;
 
     private String referencedParameters;
+
     private final Script script;
 
     @DataBoundConstructor
@@ -36,17 +60,27 @@ public class CascadeChoiceProvider extends ChoiceListProvider {
         this.filterLength = filterLength;
     }
 
-
+    /*
+     * (non-Javadoc)
+     * @see org.biouno.unochoice.AbstractUnoChoiceParameter#getChoiceType()
+     */
+    @Override
     public String getChoiceType() {
         return choiceType;
     }
 
-
+    /**
+     * Get the filter flag.
+     * @return filter flag
+     */
     public Boolean getFilterable() {
         return filterable;
     }
 
-
+    /**
+     * Get the filter length.
+     * @return filter length
+     */
      public Integer getFilterLength() {
          return filterLength == null ? (Integer) 1 : filterLength;
      }
@@ -68,6 +102,8 @@ public class CascadeChoiceProvider extends ChoiceListProvider {
     public Script getScript() {
         return script;
     }
+
+    // --- descriptor
 
     @Extension
     public static final class DescriptImpl extends ChoiceListProviderDescriptor {

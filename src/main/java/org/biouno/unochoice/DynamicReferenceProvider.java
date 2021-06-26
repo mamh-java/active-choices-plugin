@@ -16,13 +16,31 @@ import org.kohsuke.stapler.bind.JavaScriptMethod;
 
 import java.util.List;
 
-
+/**
+ * <p>Provides a <b>dynamic reference parameter</b> for users. This is a not so elegant
+ * solution, since we are using a ParameterDefinition extension point, but it
+ * actually <b>doesn't provide any parameter value</b>.</p>
+ *
+ * <p>This kind of parameter is only for reference. An use case is when you have several
+ * job parameters, but your input values may vary depending on previous executions. You
+ * can get the previous executions by accessing from your Groovy code the jenkinsProject
+ * variable.</p>
+ *
+ * <p>Its options are retrieved from the evaluation of a Groovy script.</p>
+ *
+ * @author Bruno P. Kinoshita
+ * @since 0.1
+ */
 public class DynamicReferenceProvider extends ChoiceListProvider {
 
-
+    /*
+     * Serial UID.
+     */
     private static final long serialVersionUID = 8261526672604361397L;
 
-
+    /**
+     * Choice type.
+     */
     private final String choiceType;
 
     private final Boolean omitValueField;
@@ -40,7 +58,11 @@ public class DynamicReferenceProvider extends ChoiceListProvider {
         this.omitValueField = BooleanUtils.toBooleanDefaultIfNull(omitValueField, Boolean.FALSE);
     }
 
-
+    /*
+     * (non-Javadoc)
+     * @see org.biouno.unochoice.AbstractUnoChoiceParameter#getChoiceType()
+     */
+    @Override
     public String getChoiceType() {
         return this.choiceType;
     }
@@ -48,7 +70,6 @@ public class DynamicReferenceProvider extends ChoiceListProvider {
     public Boolean getOmitValueField() {
         return omitValueField;
     }
-
 
     public Script getScript() {
         return script;
@@ -58,16 +79,18 @@ public class DynamicReferenceProvider extends ChoiceListProvider {
         return referencedParameters;
     }
 
+    @Override
+    public List<String> getChoiceList() {
+        return null;
+    }
+
     @JavaScriptMethod
     public String getChoicesAsStringForUI() {
 
         return "";
     }
 
-    @Override
-    public List<String> getChoiceList() {
-        return null;
-    }
+    // --- descriptor
 
     @Extension
     public static final class DescriptorImpl extends ChoiceListProviderDescriptor {
@@ -77,8 +100,6 @@ public class DynamicReferenceProvider extends ChoiceListProvider {
         public String getDisplayName() {
             return "Active Choices Reference Parameter";
         }
-
-
 
     }
 
