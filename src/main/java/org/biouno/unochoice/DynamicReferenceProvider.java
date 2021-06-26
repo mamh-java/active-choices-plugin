@@ -1,0 +1,85 @@
+
+package org.biouno.unochoice;
+
+import hudson.Extension;
+import hudson.model.AbstractProject;
+import hudson.util.FormValidation;
+import net.sf.json.JSONObject;
+import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.StringUtils;
+import org.biouno.unochoice.model.Script;
+import org.kohsuke.stapler.Ancestor;
+import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.bind.JavaScriptMethod;
+
+import java.util.List;
+
+
+public class DynamicReferenceProvider extends ChoiceListProvider {
+
+
+    private static final long serialVersionUID = 8261526672604361397L;
+
+
+    private final String choiceType;
+
+    private final Boolean omitValueField;
+
+    private final Script script;
+    private String referencedParameters;
+
+    @DataBoundConstructor
+    public DynamicReferenceProvider(Script script,
+                                    String choiceType, String referencedParameters,
+                                    Boolean omitValueField) {
+        this.script=script;
+        this.referencedParameters=referencedParameters;
+        this.choiceType = choiceType;
+        this.omitValueField = BooleanUtils.toBooleanDefaultIfNull(omitValueField, Boolean.FALSE);
+    }
+
+
+    public String getChoiceType() {
+        return this.choiceType;
+    }
+
+    public Boolean getOmitValueField() {
+        return omitValueField;
+    }
+
+
+    public Script getScript() {
+        return script;
+    }
+
+    public String getReferencedParameters() {
+        return referencedParameters;
+    }
+
+    @JavaScriptMethod
+    public String getChoicesAsStringForUI() {
+
+        return "";
+    }
+
+    @Override
+    public List<String> getChoiceList() {
+        return null;
+    }
+
+    @Extension
+    public static final class DescriptorImpl extends ChoiceListProviderDescriptor {
+
+
+        @Override
+        public String getDisplayName() {
+            return "Active Choices Reference Parameter";
+        }
+
+
+
+    }
+
+}
