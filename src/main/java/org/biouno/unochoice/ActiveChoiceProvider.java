@@ -2,6 +2,8 @@
 package org.biouno.unochoice;
 
 import hudson.Extension;
+
+import org.apache.commons.lang.StringUtils;
 import org.biouno.unochoice.model.Script;
 import org.kohsuke.stapler.DataBoundConstructor;
 
@@ -52,7 +54,7 @@ public class ActiveChoiceProvider extends ChoiceListProvider {
     @DataBoundConstructor
     public ActiveChoiceProvider(Script script, String choiceType, Boolean filterable, Integer filterLength) {
         this.script = script;
-        this.choiceType = choiceType;
+        this.choiceType = StringUtils.defaultIfBlank(choiceType, ActiveChoiceParameterDefinition.PARAMETER_TYPE_SINGLE_SELECT);
         this.filterable = filterable;
         this.filterLength = filterLength;
     }
