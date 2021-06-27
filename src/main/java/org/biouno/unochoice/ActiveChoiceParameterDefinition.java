@@ -118,7 +118,11 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
      */
     private static final String JENKINS_PARAMETER_VARIABLE_NAME = "jenkinsParameter";
 
-
+    /**
+     * public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition
+     * public class SimpleParameterDefinition extends ParameterDefinition
+     * from public abstract class ParameterDefinition
+     */
     private String type;
 
     /**
@@ -164,7 +168,7 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
      * Choice type.
      * from 子类
      * CascadeChoiceParameter       继承 第 3 父类, 联动可选的参数类型
-     * DynamicReferenceParameter    继承 第 3 父类, 
+     * DynamicReferenceParameter    继承 第 3 父类,
      * ChoiceParameter              继承 第 2 父类,普通的可选参数类型
      */
     private String choiceType;
@@ -293,10 +297,6 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
         }
     }
 
-    public ChoiceListProvider getChoiceListProvider() {
-        return choiceListProvider;
-    }
-
     @Override
     public String getType() {
         return type;
@@ -306,12 +306,40 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
         return randomName;
     }
 
-    public String getReferencedParameters() {
-        return referencedParameters;
+    /**
+     * Get the number of visible items in the select.
+     * from class AbstractScriptableParameter 第 2 父类
+     * @return the number of choices or, if it is higher than the default, then it returns the default maximum value
+     */
+    public int getVisibleItemCount() {
+        if (visibleItemCount <= 0) {
+            visibleItemCount = 1;
+        }
+        return Math.min(visibleItemCount, DEFAULT_MAX_VISIBLE_ITEM_COUNT);
     }
 
     public Script getScript() {
         return script;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public String getProjectFullName() {
+        return projectFullName;
+    }
+
+    public Map<Object, Object> getParameters() {
+        return parameters;
+    }
+
+    public String getReferencedParameters() {
+        return referencedParameters;
+    }
+
+    public String getChoiceType() {
+        return choiceType;
     }
 
     public Boolean getFilterable() {
@@ -326,8 +354,8 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
         return omitValueField;
     }
 
-    public String getChoiceType() {
-        return choiceType;
+    public ChoiceListProvider getChoiceListProvider() {
+        return choiceListProvider;
     }
 
     public ChoiceListProvider getEnabledChoiceListProvider() {
@@ -337,27 +365,13 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
         }
 
         // filter providers.
-        List<Descriptor<ChoiceListProvider>> testList = DescriptorVisibilityFilter.apply(
-                getDescriptor(),
-                Arrays.asList(p.getDescriptor())
-        );
+        List<Descriptor<ChoiceListProvider>> testList = DescriptorVisibilityFilter
+                .apply(getDescriptor(), Arrays.asList(p.getDescriptor()));
         if (testList.isEmpty()) {
             LOGGER.log(Level.WARNING, "{0} is configured but disabled in the system configuration.", p.getDescriptor().getDisplayName());
             return null;
         }
         return p;
-    }
-
-    public Map<Object, Object> getParameters() {
-        return parameters;
-    }
-
-    public int getVisibleItemCount() {
-        if (visibleItemCount <= 0)
-            visibleItemCount = 1;
-        if (visibleItemCount < DEFAULT_MAX_VISIBLE_ITEM_COUNT)
-            return visibleItemCount;
-        return DEFAULT_MAX_VISIBLE_ITEM_COUNT;
     }
 
     public String getChoicesAsString() {
