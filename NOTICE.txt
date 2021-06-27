@@ -1,1 +1,2 @@
 The original design was inspired in Dynamic Parameters Plug-in (Apache License).
+最初的设计灵感来自动态参数插件https://github.com/mamh-java/dynamic-parameter-plugin（Apache许可证）。
