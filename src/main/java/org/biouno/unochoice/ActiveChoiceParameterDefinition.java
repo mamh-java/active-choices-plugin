@@ -438,17 +438,33 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
         return "";
     }
 
+    /**
+     * Constructor instantiating with parameters in the configuration page.
+     *
+     * When instantiating from the saved configuration,
+     * the object is directly serialized with XStream,
+     * and no constructor is used.
+     *
+     * @param name the name of this parameter (used as a variable name).
+     * @param description the description of this parameter. Used only for the convenience of users.
+     * @param randomName
+     * @param choiceListProvider the choice provider
+     */
     @DataBoundConstructor
     public ActiveChoiceParameterDefinition(String name, String description, String randomName, ChoiceListProvider choiceListProvider) {
-        super(name, description);
+        // There seems no way to forbid invalid values to be submitted.
+        // SimpleParameterDefinition seems not to trim name parameter, so trim here.
+        super(StringUtils.trim(name), description);
 
+        //初始化 provider，这个是这个类特有的，也是这次新增的，原来代码是没的
+        this.choiceListProvider = choiceListProvider;
+
+        // from class AbstractUnoChoiceParameter constructor// from class AbstractUnoChoiceParameter 第 1 父类
         if (StringUtils.isBlank(randomName)) {
             this.randomName = Utils.createRandomParameterName("choice-parameter", "");
         } else {
             this.randomName = randomName;
         }
-
-        this.choiceListProvider = choiceListProvider;
 
         if (choiceListProvider instanceof ActiveChoiceProvider) {
             ActiveChoiceProvider provider = (ActiveChoiceProvider) choiceListProvider;
@@ -474,6 +490,10 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
             this.omitValueField = provider.getOmitValueField();
         }
 
+        // from class AbstractScriptableParameter constructor
+        // Try to get the project name from the current request. In case of being called in some other non-web way,
+        // the name will be fetched later via Jenkins.getInstance() and iterating through all items. This is for a
+        // performance wise approach first.
         final StaplerRequest currentRequest = Stapler.getCurrentRequest();
         String projectName = null;
         String projectFullName = null;
