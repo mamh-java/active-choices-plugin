@@ -52,7 +52,6 @@ public class ActiveChoiceProvider extends ChoiceListProvider {
      * (non-Javadoc)
      * @see org.biouno.unochoice.AbstractUnoChoiceParameter#getChoiceType()
      */
-    @Override
     public String getChoiceType() {
         return this.choiceType;
     }
