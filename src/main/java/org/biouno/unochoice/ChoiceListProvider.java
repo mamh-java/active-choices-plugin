@@ -23,18 +23,26 @@
  */
 package org.biouno.unochoice;
 
-import hudson.DescriptorExtensionList;
-import hudson.ExtensionPoint;
-import hudson.model.AbstractBuild;
-import hudson.model.AbstractDescribableImpl;
-import hudson.model.AbstractProject;
-import hudson.model.Descriptor;
-import hudson.model.Hudson;
-
 import java.io.Serializable;
 import java.util.List;
 
+import hudson.DescriptorExtensionList;
+import hudson.ExtensionPoint;
+import hudson.model.AbstractDescribableImpl;
+import hudson.model.Descriptor;
+import hudson.model.Hudson;
 
+/**
+ * The abstract base class of modules provides choices.
+ * from jp.ikedam.jenkins.plugins.extensible_choice_parameter.ChoiceListProvider
+ * Create a new choice provider in following steps:
+ * <ol>
+ *    <li>Define a new class derived from ChoiceListProvider</li>
+ *    <li>Override getChoiceList(), which returns the choices.</li>
+ *    <li>Define the internal public static class named DescriptorImpl, derived from Descriptor&lt;ChoiceListProvider&gt;</li>
+ *    <li>annotate the DescriptorImpl with Extension</li>
+ * </ol>
+ */
 abstract public class ChoiceListProvider extends AbstractDescribableImpl<ChoiceListProvider> implements ExtensionPoint, Serializable {
 
     private static final long serialVersionUID = 8965389708210167871L;
@@ -57,9 +65,43 @@ abstract public class ChoiceListProvider extends AbstractDescribableImpl<ChoiceL
         return null;
     }
 
+    // from jp.ikedam.jenkins.plugins.extensible_choice_parameter.ChoiceListProvider 但是这2个方法没有用到，这里先注释掉
+    /**
+     * Called when a build is triggered
+     * <p>
+     * Implementations can override this method, and do custom behavior.
+     * Default implementation do nothing at all.
+     *
+     * @param job   the job with which this choice provider is used.
+     * @param def   the parameter definition the value specified
+     * @param value the value specified.
+     */
+    //    public void onBuildTriggeredWithValue(
+    //            AbstractProject<?, ?> job,
+    //            ActiveChoiceParameterDefinition def,
+    //            String value
+    //    ) {
+    //        // Nothing to do.
+    //    }
 
-
-
+    // from jp.ikedam.jenkins.plugins.extensible_choice_parameter.ChoiceListProvider 但是这2个方法没有用到，这里先注释掉
+    /**
+     * Called when a build is completed
+     * <p>
+     * Implementations can override this method, and do custom behavior.
+     * Default implementation do nothing at all.
+     *
+     * @param build the build with which this choice provider is used.
+     * @param def   the parameter definition the value specified
+     * @param value the value specified.
+     */
+    //    public void onBuildCompletedWithValue(
+    //            AbstractBuild<?, ?> build,
+    //            ActiveChoiceParameterDefinition def,
+    //            String value
+    //    ) {
+    //        // Nothing to do.
+    //    }
 
     /**
      * Returns all the ChoiceListProvider subclass whose DescriptorImpl is annotated with Extension.
