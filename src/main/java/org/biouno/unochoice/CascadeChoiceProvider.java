@@ -64,7 +64,6 @@ public class CascadeChoiceProvider extends ChoiceListProvider {
      * (non-Javadoc)
      * @see org.biouno.unochoice.AbstractUnoChoiceParameter#getChoiceType()
      */
-    @Override
     public String getChoiceType() {
         return choiceType;
     }
