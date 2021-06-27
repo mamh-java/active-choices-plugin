@@ -65,7 +65,7 @@ public class CascadeChoiceProvider extends ChoiceListProvider {
     public CascadeChoiceProvider(Script script, String choiceType, String referencedParameters,
                                  Boolean filterable, Integer filterLength) {
         this.script = script;
-        this.choiceType = choiceType;
+        this.choiceType = StringUtils.defaultIfBlank(choiceType, ActiveChoiceParameterDefinition.PARAMETER_TYPE_SINGLE_SELECT);
         this.filterable = filterable;
         this.filterLength = filterLength;
         this.referencedParameters=referencedParameters;
