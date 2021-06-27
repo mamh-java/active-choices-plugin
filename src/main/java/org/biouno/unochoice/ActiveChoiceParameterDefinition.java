@@ -71,32 +71,18 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOGGER = Logger.getLogger(ActiveChoiceParameterDefinition.class.getName());
-    /**
-     * Used to split values that come from the UI via Ajax POST's
-     */
-    private static final String SEPARATOR = "__LESEP__";
-    /**
-     * Used to split values when scripts return values like A=2, B=3.
-     */
-    private static final String EQUALS = "=";
-    /**
-     * Constant used to add the project in the environment variables map.
-     */
-    private static final String JENKINS_PROJECT_VARIABLE_NAME = "jenkinsProject";
-    /**
-     * Constant used to add the build in the environment variables map.
-     */
-    private static final String JENKINS_BUILD_VARIABLE_NAME = "jenkinsBuild";
-    /**
-     * Constant used to add the parameter name in the environment variables map.
-     */
-    private static final String JENKINS_PARAMETER_VARIABLE_NAME = "jenkinsParameter";
 
-
-    public static final String PARAMETER_TYPE_SINGLE_SELECT = "PT_SINGLE_SELECT"; // default choice type
-    public static final String PARAMETER_TYPE_MULTI_SELECT = "PT_MULTI_SELECT";
-    public static final String PARAMETER_TYPE_CHECK_BOX = "PT_CHECKBOX";
-    public static final String PARAMETER_TYPE_RADIO = "PT_RADIO";
+    /*
+     * Constants.
+     * from class AbstractUnoChoiceParameter 第 1 父类
+     * 这个AbstractUnoChoiceParameter是之前的 3个 parameter 的 父类，继承SimpleParameterDefinition的。
+     * 现在是要统一把之前的 3个 parameter 的 类 内容 放到 1个 parameter中，也就是放到
+     * public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition  中
+     */
+    public static final String PARAMETER_TYPE_SINGLE_SELECT = "PT_SINGLE_SELECT"; // default choice type 单选下拉列表
+    public static final String PARAMETER_TYPE_MULTI_SELECT = "PT_MULTI_SELECT"; //多选 下拉列表
+    public static final String PARAMETER_TYPE_CHECK_BOX = "PT_CHECKBOX"; //方块多选框
+    public static final String PARAMETER_TYPE_RADIO = "PT_RADIO"; //圆形单选框
 
     public static final String ELEMENT_TYPE_TEXT_BOX = "ET_TEXT_BOX"; // default choice type
     public static final String ELEMENT_TYPE_ORDERED_LIST = "ET_ORDERED_LIST";
@@ -106,30 +92,112 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
 
     private static final int DEFAULT_MAX_VISIBLE_ITEM_COUNT = 10;
 
+    /**
+     * Used to split values that come from the UI via Ajax POST's
+     * from class AbstractScriptableParameter  第 2 父类
+     */
+    private static final String SEPARATOR = "__LESEP__";
+    /**
+     * Used to split values when scripts return values like A=2, B=3.
+     * from class AbstractScriptableParameter 第 2 父类
+     */
+    private static final String EQUALS = "=";
+    /**
+     * Constant used to add the project in the environment variables map.
+     * from class AbstractScriptableParameter 第 2 父类
+     */
+    private static final String JENKINS_PROJECT_VARIABLE_NAME = "jenkinsProject";
+    /**
+     * Constant used to add the build in the environment variables map.
+     * from class AbstractScriptableParameter 第 2 父类
+     */
+    private static final String JENKINS_BUILD_VARIABLE_NAME = "jenkinsBuild";
+    /**
+     * Constant used to add the parameter name in the environment variables map.
+     * from class AbstractScriptableParameter 第 2 父类
+     */
+    private static final String JENKINS_PARAMETER_VARIABLE_NAME = "jenkinsParameter";
+
+
     private String type;
+
+    /**
+     * from class AbstractUnoChoiceParameter 第 1 父类
+     */
     private String randomName;
-    private String choiceType;
+
+    /**
+     * Number of visible items on the screen.
+     * from class AbstractScriptableParameter 第 2 父类
+     */
     private int visibleItemCount = 1;
+    /**
+     * Script used to render the parameter.
+     * from class AbstractScriptableParameter 第 2 父类
+     */
     private Script script;
-    private Boolean filterable;
-    private int filterLength;
-    private String referencedParameters;
-    private Boolean omitValueField;
-
-
-    private Map<Object, Object> parameters = new LinkedHashMap<Object, Object>();
-
-    private ChoiceListProvider choiceListProvider = null;
 
     /**
      * The project name.
+     * from class AbstractScriptableParameter 第 2 父类
      */
     private String projectName;
     /**
      * The project Full Name (including folder).
+     * from class AbstractScriptableParameter 第 2 父类
      */
     private String projectFullName;
 
+    /**
+     * Map with parameters in the UI.
+     * Map is not serializable, but LinkedHashMap is. Ignore static analysis errors
+     * from class AbstractCascadableParameter 第 3 父类  联动参数
+     */
+    private Map<Object, Object> parameters = new LinkedHashMap<Object, Object>();
+    /**
+     * Referenced parameters.联动参数名称
+     * from class AbstractCascadableParameter  第 3 父类  联动参数
+     */
+    private String referencedParameters;
+
+    /**
+     * Choice type.
+     * from 子类
+     * CascadeChoiceParameter       继承 第 3 父类, 联动可选的参数类型
+     * DynamicReferenceParameter    继承 第 3 父类, 
+     * ChoiceParameter              继承 第 2 父类,普通的可选参数类型
+     */
+    private String choiceType;
+
+    /**
+     * Filter flag.
+     * from 子类
+     * CascadeChoiceParameter       继承 第 3 父类, 联动可选的参数类型
+     * ChoiceParameter              继承 第 2 父类,普通的可选参数类型
+     */
+    private Boolean filterable;
+
+    /**
+     * Filter length. Defines a minimum number of characters that must be entered before the filter
+     * is activated.
+     * CascadeChoiceParameter       继承 第 3 父类, 联动可选的参数类型
+     * ChoiceParameter              继承 第 2 父类,普通的可选参数类型
+     */
+    private int filterLength;
+
+    /**
+     * from 子类
+     * DynamicReferenceParameter    继承 第 3 父类,
+     */
+    private Boolean omitValueField;
+
+
+    /**
+     * provider
+     *参考extensible_choice_parameter/ExtensibleChoiceParameterDefinition.java
+     *
+     */
+    private ChoiceListProvider choiceListProvider = null;
 
     @Extension
     public static class DescriptorImpl extends ParameterDescriptor {
