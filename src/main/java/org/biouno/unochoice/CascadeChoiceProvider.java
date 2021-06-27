@@ -49,15 +49,26 @@ public class CascadeChoiceProvider extends ChoiceListProvider {
 
     private Script script;
 
+    /**
+     * Constructor called from Jelly with parameters.
+     *
+     * @param name name 这3个统一提取放到 类 ActiveChoiceParameterDefinition 中了
+     * @param description description 这3个统一提取放到 类 ActiveChoiceParameterDefinition 中了
+     * @param randomName parameter random generated name (uuid) 这3个统一提取放到 类 ActiveChoiceParameterDefinition 中了
+     * @param script script
+     * @param choiceType choice type
+     * @param referencedParameters referenced parameters
+     * @param filterable filter flag
+     * @param filterLength filter length
+     */
     @DataBoundConstructor
-    public CascadeChoiceProvider(Script script,
-                                 String choiceType, String referencedParameters,
+    public CascadeChoiceProvider(Script script, String choiceType, String referencedParameters,
                                  Boolean filterable, Integer filterLength) {
-        this.script=script;
+        this.script = script;
         this.choiceType = choiceType;
-        this.referencedParameters=referencedParameters;
         this.filterable = filterable;
         this.filterLength = filterLength;
+        this.referencedParameters=referencedParameters;
     }
 
     /*
