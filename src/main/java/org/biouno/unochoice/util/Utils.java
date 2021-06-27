@@ -46,7 +46,7 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
-import org.biouno.unochoice.AbstractUnoChoiceParameter;
+import org.biouno.unochoice.ActiveChoiceParameterDefinition;
 import org.jenkinsci.plugins.scriptler.config.Script;
 import org.jenkinsci.plugins.scriptler.config.ScriptlerConfiguration;
 
@@ -249,8 +249,8 @@ public class Utils {
             parameterDefinitions.addAll(params);
         }
         for (ParameterDefinition pd : parameterDefinitions) {
-            if (pd instanceof AbstractUnoChoiceParameter) {
-                AbstractUnoChoiceParameter parameterDefinition = (AbstractUnoChoiceParameter) pd;
+            if (pd instanceof ActiveChoiceParameterDefinition) {
+                ActiveChoiceParameterDefinition parameterDefinition = (ActiveChoiceParameterDefinition) pd;
                 String uuid = parameterDefinition.getRandomName();
                 if (ObjectUtils.equals(parameterUUID, uuid)) {
                     return true;
