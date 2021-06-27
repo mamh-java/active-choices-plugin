@@ -24,20 +24,20 @@ public class ActiveChoiceProvider extends ChoiceListProvider {
     /**
      * Choice type.
      */
-    private final String choiceType;
+    private String choiceType;
 
     /**
      * Filter flag.
      */
-    private final Boolean filterable;
+    private Boolean filterable;
 
     /**
      * Filter length. Defines a minimum number of characters that must be entered before the filter
      * is activated.
      */
-    private final Integer filterLength;
+    private Integer filterLength;
 
-    private final Script script;
+    private Script script;
 
 
     @DataBoundConstructor
