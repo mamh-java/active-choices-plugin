@@ -39,7 +39,16 @@ public class ActiveChoiceProvider extends ChoiceListProvider {
 
     private Script script;
 
-
+    /**
+     * Constructor called from Jelly with parameters.
+     * @param name name 这3个统一提取放到 类 ActiveChoiceParameterDefinition 中了
+     * @param description description这3个统一提取放到 类 ActiveChoiceParameterDefinition 中了
+     * @param randomName parameter random generated name这 3个统一提取放到 类 ActiveChoiceParameterDefinition 中了
+     * @param script script
+     * @param choiceType choice type
+     * @param filterable filter flag
+     * @param filterLength length when filter start filtering
+     */
     @DataBoundConstructor
     public ActiveChoiceProvider(Script script, String choiceType, Boolean filterable, Integer filterLength) {
         this.script = script;
