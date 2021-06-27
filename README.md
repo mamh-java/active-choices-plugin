@@ -16,11 +16,12 @@ Active Choices parameters are scripted using Groovy, or (optionally) Scriptler G
 support the use of the Jenkins Java API, system environment variables, global node properties, and potentially
 external Java and Javascript libraries.
 
-Once the plugin is installed, three new parameter types become available:
+Once the plugin is installed, three new parameter types **Active Choices Parameter** become available
+and there are three provider you can choose it:
 
-1. Active Choices Parameter
-2. Active Choices Reactive Parameter
-3. Active Choices Reactive Reference Parameter
+1.ActiveChoiceProvider  for Active Choices Parameter
+2.CascadeChoiceProvider for Active Choices Reactive Parameter
+3.ReferenceChoiceProvider for Active Choices Reactive Reference Parameter
 
 > **_NOTE:_** The Reactive Reference Parameter allows for parameters to be displayed as
 >formatted HTML. When configuring jobs with this feature, keep in mind how the parameter
