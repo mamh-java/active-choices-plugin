@@ -49,9 +49,20 @@ public class DynamicReferenceProvider extends ChoiceListProvider {
 
     private Script script;
 
+    /**
+     * Constructor called from Jelly with parameters.
+     *
+     * @param name name 这3个统一提取放到 类 ActiveChoiceParameterDefinition 中了
+     * @param description description 这3个统一提取放到 类 ActiveChoiceParameterDefinition 中了
+     * @param randomName parameter random generated name (uuid) 这3个统一提取放到 类 ActiveChoiceParameterDefinition 中了
+     * @param script script
+     * @param choiceType choice type
+     * @param referencedParameters referenced parameters
+     * @param omitValueField used in the UI to decide whether to include a hidden empty &lt;input name=value&gt;.
+     * <code>false</code> by default.
+     */
     @DataBoundConstructor
-    public DynamicReferenceProvider(Script script,
-                                    String choiceType, String referencedParameters,
+    public DynamicReferenceProvider(Script script, String choiceType, String referencedParameters,
                                     Boolean omitValueField) {
         this.script=script;
         this.referencedParameters=referencedParameters;
