@@ -59,6 +59,7 @@ import javax.servlet.ServletException;
 
 import hudson.DescriptorExtensionList;
 import hudson.Extension;
+import hudson.Util;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractItem;
 import hudson.model.Describable;
@@ -426,18 +427,6 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
         return getChoiceList();
     }
 
-
-    public String getChoicesAsString() {
-        return getChoicesAsString(getParameters());
-    }
-
-    public String getChoicesAsString(Map<Object, Object> parameters) {
-        final Object value = eval(parameters);
-        if (value != null)
-            return value.toString();
-        return "";
-    }
-
     /**
      * Constructor instantiating with parameters in the configuration page.
      *
@@ -517,9 +506,14 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
         return value;
     }
 
+    /**
+     * Helper parameters used to render the parameter definition.
+     *
+     * @return Map with helper parameters
+     */
     private Map<Object, Object> getHelperParameters() {
         // map with parameters
-        final Map<Object, Object> helperParameters = new LinkedHashMap<Object, Object>();
+        final Map<Object, Object> helperParameters = new LinkedHashMap<>();
 
         // First, if the project name is set, we then find the project by its name, and inject into the map
         Project<?, ?> project = null;
@@ -552,6 +546,52 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
         return helperParameters;
     }
 
+    public Map<Object, Object> getChoices() {
+        Map<Object, Object> choices = this.getChoices(getParameters());
+        visibleItemCount = choices.size();
+        return choices;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.biouno.unochoice.ScriptableParameter#getChoices(java.util.Map)
+     */
+    @SuppressWarnings("unchecked") // due to Web + Java and scripts integration
+    public Map<Object, Object> getChoices(Map<Object, Object> parameters) {
+        final Object value = eval(parameters);
+        if (value instanceof Map) {
+            Map<Object, Object> map = (Map<Object, Object>) value;
+            visibleItemCount = map.size();
+            return map;
+        }
+        if (value instanceof List) {
+            // here we take a list and return it as a map
+            final Map<Object, Object> map = new LinkedHashMap<>();
+            for (Object o : (List<Object>) value) {
+                map.put(o, o);
+            }
+            visibleItemCount = map.size();
+            return map;
+        }
+        if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.fine(String.format("Script parameter with name '%s' is not an instance of java.util.Map. The "
+                    + "parameter value is %s", getName(), value));
+        }
+        return Collections.emptyMap();
+    }
+
+    public String getChoicesAsString() {
+        return getChoicesAsString(getParameters());
+    }
+
+    public String getChoicesAsString(Map<Object, Object> parameters) {
+        final Object value = eval(parameters);
+        if (value != null)
+            return value.toString();
+        return "";
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     private Object eval(Map<Object, Object> parameters) {
         try {
             Map<Object, Object> scriptParameters = getHelperParameters();
@@ -563,36 +603,43 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
         }
     }
 
-    public Map<Object, Object> getChoices(Map<Object, Object> parameters) {
-        final Object value = eval(parameters);
-        if (value instanceof Map) {
-            Map<Object, Object> map = (Map<Object, Object>) value;
-            visibleItemCount = map.size();
-            return map;
-        }
-        if (value instanceof List) {
-            final Map<Object, Object> map = new LinkedHashMap<Object, Object>();
-            for (Object o : (List<Object>) value) {
-                map.put(o, o);
-            }
-            visibleItemCount = map.size();
-            return map;
-        }
-
-        return Collections.emptyMap();
+    @Override
+    public ParameterValue getDefaultParameterValue() {
+        final String name = getName();
+        String defaultValue = findDefaultValue(getChoices(Collections.<Object, Object> emptyMap()));
+        final String value = ObjectUtils.toString(defaultValue, ""); // Jenkins doesn't like null parameter values
+        final StringParameterValue stringParameterValue = new StringParameterValue(name, value);
+        return stringParameterValue;
     }
 
-    public Map<Object, Object> getChoices() {
-        Map<Object, Object> map = Collections.emptyMap();
-        Map<Object, Object> choices = getChoices(map);
-        visibleItemCount = choices.size();
+    private static String findDefaultValue(Map<Object, Object> choices) {
+        if (choices == null || choices.isEmpty()) {
+            return null;
+        }
 
-        return choices;
+        List<String> defaultValues = new ArrayList<>();
+        List<Object> values = new ArrayList<>(choices.values());
+        for (Object value : values) {
+            String valueText = ObjectUtils.toString(value, "");
+            if (Utils.isSelected(valueText)) {
+                defaultValues.add(Utils.escapeSelectedAndDisabled(valueText));
+            }
+        }
+        if (defaultValues.isEmpty()) {
+            return ObjectUtils.toString(values.get(0), null);
+        }
+
+        StringBuilder defaultValuesText = new StringBuilder();
+        for (String value : defaultValues) {
+            defaultValuesText.append(',');
+            defaultValuesText.append(value);
+        }
+        return defaultValuesText.substring(1);
     }
 
     @JavaScriptMethod
     public void doUpdate(String parameters) {
-        Map<Object, Object> parameters1 = getParameters();
+        getParameters().clear();
         final String[] params = parameters.split(SEPARATOR);
         for (String param : params) {
             final String[] nameValue = param.split(EQUALS);
@@ -625,7 +672,7 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
     @JavaScriptMethod
     public List<Object> getChoicesForUI() {
         Map<Object, Object> mapResult = getChoices(getParameters());
-        return Arrays.<Object>asList(mapResult.values(), mapResult.keySet());
+        return Arrays.asList(mapResult.values(), mapResult.keySet());
     }
 
     @JavaScriptMethod
@@ -638,11 +685,11 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
         String referencedParameters = this.getReferencedParameters();
         if (StringUtils.isNotBlank(referencedParameters)) {
             String[] array = referencedParameters.split(",");
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
             for (String value : array) {
                 value = value.trim();
                 if (StringUtils.isNotBlank(value)) {
-                    list.add(value);
+                    list.add(Util.escape(value));
                 }
             }
             return list.toArray(new String[0]);
@@ -650,6 +697,11 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
         return new String[]{};
     }
 
+    /*
+     * (non-Javadoc)
+     * @see hudson.model.ParameterDefinition#createValue(org.kohsuke.stapler.StaplerRequest, net.sf.json.JSONObject)
+     * from class AbstractUnoChoiceParameter
+     */
     @Override
     public ParameterValue createValue(StaplerRequest request, JSONObject json) {
         if (json.containsKey("file")) {
@@ -690,6 +742,11 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * @see hudson.model.SimpleParameterDefinition#createValue(java.lang.String)
+     * from class AbstractUnoChoiceParameter
+     */
     @Override
     public ParameterValue createValue(String value) {
         final String description = getDescription();
@@ -698,16 +755,4 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
         return parameterValue;
     }
 
-    @Override
-    public ParameterValue getDefaultParameterValue() {
-        Object firstElement = "";
-        final Map<Object, Object> choices = getChoices(getParameters());
-        if (choices != null && !choices.isEmpty()) {
-            firstElement = choices.entrySet().iterator().next().getValue();
-        }
-        final String name = getName();
-        final String value = ObjectUtils.toString(firstElement, ""); // Jenkins doesn't like null parameter values
-        final StringParameterValue stringParameterValue = new StringParameterValue(name, value);
-        return stringParameterValue;
-    }
 }
