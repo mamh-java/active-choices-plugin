@@ -66,7 +66,7 @@ public class DynamicReferenceProvider extends ChoiceListProvider {
                                     Boolean omitValueField) {
         this.script=script;
         this.referencedParameters=referencedParameters;
-        this.choiceType = choiceType;
+        this.choiceType = StringUtils.defaultIfBlank(choiceType, ActiveChoiceParameterDefinition.PARAMETER_TYPE_SINGLE_SELECT);
         this.omitValueField = BooleanUtils.toBooleanDefaultIfNull(omitValueField, Boolean.FALSE);
     }
 
