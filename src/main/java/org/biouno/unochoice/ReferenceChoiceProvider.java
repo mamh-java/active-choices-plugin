@@ -31,7 +31,7 @@ import java.util.List;
  * @author Bruno P. Kinoshita
  * @since 0.1
  */
-public class DynamicReferenceProvider extends ChoiceListProvider {
+public class ReferenceChoiceProvider extends ChoiceListProvider {
 
     /*
      * Serial UID.
@@ -62,8 +62,8 @@ public class DynamicReferenceProvider extends ChoiceListProvider {
      * <code>false</code> by default.
      */
     @DataBoundConstructor
-    public DynamicReferenceProvider(Script script, String choiceType, String referencedParameters,
-                                    Boolean omitValueField) {
+    public ReferenceChoiceProvider(Script script, String choiceType, String referencedParameters,
+                                   Boolean omitValueField) {
         this.script=script;
         this.referencedParameters=referencedParameters;
         this.choiceType = StringUtils.defaultIfBlank(choiceType, ActiveChoiceParameterDefinition.PARAMETER_TYPE_SINGLE_SELECT);
