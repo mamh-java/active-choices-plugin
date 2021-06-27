@@ -24,38 +24,27 @@
 
 package org.biouno.unochoice;
 
-import hudson.DescriptorExtensionList;
-import hudson.Extension;
-import hudson.model.AbstractBuild;
-import hudson.model.AbstractItem;
-import hudson.model.Describable;
-import hudson.model.Descriptor;
-import hudson.model.DescriptorVisibilityFilter;
-import hudson.model.FileParameterValue;
-import hudson.model.ParameterValue;
-import hudson.model.Project;
-import hudson.model.SimpleParameterDefinition;
-import hudson.model.StringParameterValue;
-import hudson.util.FormValidation;
-import jenkins.model.Jenkins;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.util.JSONUtils;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.biouno.unochoice.model.Script;
 import org.biouno.unochoice.util.ScriptCallback;
 import org.biouno.unochoice.util.Utils;
+import org.kohsuke.accmod.Restricted;
+import org.kohsuke.accmod.restrictions.DoNotUse;
 import org.kohsuke.stapler.Ancestor;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.Stapler;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.bind.JavaScriptMethod;
+import org.kohsuke.stapler.export.Exported;
 import org.kohsuke.stapler.json.JsonHttpResponse;
 
-import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,6 +54,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.servlet.ServletException;
+
+import hudson.DescriptorExtensionList;
+import hudson.Extension;
+import hudson.model.AbstractBuild;
+import hudson.model.AbstractItem;
+import hudson.model.Describable;
+import hudson.model.Descriptor;
+import hudson.model.DescriptorVisibilityFilter;
+import hudson.model.FileParameterValue;
+import hudson.model.Item;
+import hudson.model.Job;
+import hudson.model.ParameterValue;
+import hudson.model.Project;
+import hudson.model.SimpleParameterDefinition;
+import hudson.model.StringParameterValue;
+import hudson.util.FormValidation;
+import jenkins.model.Jenkins;
 
 
 public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
@@ -373,6 +381,51 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
         }
         return p;
     }
+
+    /**
+     * Return choices available for this parameter.
+     *
+     * TODO from src/main/java/jp/ikedam/jenkins/plugins/extensible_choice_parameter/ExtensibleChoiceParameterDefinition.java
+     *暂时不知道是干什么用的
+     *
+     * @return list of choices. never null.
+     */
+    public List<String> getChoiceList() {
+        ChoiceListProvider provider = getEnabledChoiceListProvider();
+        List<String> choiceList = (provider !=  null)?provider.getChoiceList():null;
+        return (choiceList !=  null)?choiceList:new ArrayList<String>(0);
+    }
+
+    /**
+     * Expose choices to REST web API
+     *
+     * Expose choices to trigger builds from programs,
+     * in the same way to built-in choice parameters.
+     * Only users with the Item/BUILD permission can access it.
+     *
+     * TODO from src/main/java/jp/ikedam/jenkins/plugins/extensible_choice_parameter/ExtensibleChoiceParameterDefinition.java
+     *暂时不知道是干什么用的
+     *
+     * @return the list of choices. {@code null} if no Item/Build permission.
+     * @since 1.7.0
+     */
+    @Restricted(DoNotUse.class)
+    @Exported(name="choices")
+    public List<String> getChoicesForRestApi() {
+        StaplerRequest req = Stapler.getCurrentRequest();
+        if (req == null) {
+            return null;
+        }
+        Job<?, ?> job = req.findAncestorObject(Job.class);
+        if (job == null) {
+            return null;
+        }
+        if (!job.hasPermission(Item.BUILD)) {
+            return Collections.emptyList();
+        }
+        return getChoiceList();
+    }
+
 
     public String getChoicesAsString() {
         return getChoicesAsString(getParameters());
