@@ -41,12 +41,13 @@ public class DynamicReferenceProvider extends ChoiceListProvider {
     /**
      * Choice type.
      */
-    private final String choiceType;
+    private String choiceType;
 
-    private final Boolean omitValueField;
+    private Boolean omitValueField;
 
-    private final Script script;
     private String referencedParameters;
+
+    private Script script;
 
     @DataBoundConstructor
     public DynamicReferenceProvider(Script script,
