@@ -481,8 +481,8 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
             this.filterable = provider.getFilterable();
             this.filterLength = provider.getFilterLength();
             this.referencedParameters = provider.getReferencedParameters();
-        } else if (choiceListProvider instanceof DynamicReferenceProvider) {
-            DynamicReferenceProvider provider = (DynamicReferenceProvider) choiceListProvider;
+        } else if (choiceListProvider instanceof ReferenceChoiceProvider) {
+            ReferenceChoiceProvider provider = (ReferenceChoiceProvider) choiceListProvider;
             this.type = "PT_REFERENCE";
             this.choiceType = provider.getChoiceType();
             this.script = provider.getScript();
