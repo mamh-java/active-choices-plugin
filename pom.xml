@@ -12,7 +12,7 @@
 
     <groupId>org.biouno</groupId>
     <artifactId>uno-choice</artifactId>
-    <version>2.5.7-SNAPSHOT</version>
+    <version>2.5.7</version>
     <packaging>hpi</packaging>
 
     <name>Active Choices Parameter Plugin</name>
