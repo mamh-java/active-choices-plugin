@@ -2,17 +2,13 @@
 package org.biouno.unochoice;
 
 import hudson.Extension;
-import hudson.model.AbstractProject;
-import hudson.util.FormValidation;
-import net.sf.json.JSONObject;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.biouno.unochoice.model.Script;
-import org.kohsuke.stapler.Ancestor;
+import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.bind.JavaScriptMethod;
+import org.jenkinsci.Symbol;
 
 import java.util.List;
 
@@ -104,6 +100,7 @@ public class ReferenceChoiceProvider extends ChoiceListProvider {
     // --- descriptor
 
     @Extension
+    @Symbol({"referenceChoiceProvider"})
     public static final class DescriptorImpl extends ChoiceListProviderDescriptor {
 
 

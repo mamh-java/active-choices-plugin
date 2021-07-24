@@ -4,7 +4,9 @@ package org.biouno.unochoice;
 import hudson.Extension;
 import org.apache.commons.lang.StringUtils;
 import org.biouno.unochoice.model.Script;
+import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.jenkinsci.Symbol;
 
 import java.util.List;
 
@@ -116,6 +118,7 @@ public class CascadeChoiceProvider extends ChoiceListProvider {
     // --- descriptor
 
     @Extension
+    @Symbol({"cascadeChoiceProvider"})
     public static final class DescriptImpl extends ChoiceListProviderDescriptor {
 
         @Override
