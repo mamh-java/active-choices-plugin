@@ -74,6 +74,7 @@ import hudson.model.SimpleParameterDefinition;
 import hudson.model.StringParameterValue;
 import hudson.util.FormValidation;
 import jenkins.model.Jenkins;
+import org.jenkinsci.Symbol;
 
 
 public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
@@ -213,6 +214,7 @@ public class ActiveChoiceParameterDefinition extends SimpleParameterDefinition {
     private ChoiceListProvider choiceListProvider = null;
 
     @Extension
+    @Symbol({"activeChoice"})
     public static class DescriptorImpl extends ParameterDescriptor {
         private Map<String, Boolean> choiceListEnabledMap;
 
