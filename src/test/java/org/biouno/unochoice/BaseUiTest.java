@@ -80,11 +80,15 @@ public abstract class BaseUiTest {
     @BeforeEach
     public void setUp(JenkinsRule j) {
         this.j = j;
+        final ChromeOptions options;
         if (isCi()) {
-            driver = new ChromeDriver(new ChromeOptions().addArguments("--headless", "--disable-dev-shm-usage", "--no-sandbox"));
+            options = new ChromeOptions()
+                    .setBinary("/home/jenkins/.cache/ms-playwright/chromium_headless_shell-1228")
+                    .addArguments("--headless", "--disable-dev-shm-usage", "--no-sandbox");
         } else {
-            driver = new ChromeDriver(new ChromeOptions());
+            options = new ChromeOptions();
         }
+        driver = new ChromeDriver(options);
         wait = new WebDriverWait(driver, MAX_WAIT);
         driver.manage().window().setSize(new Dimension(2560, 1440));
     }
